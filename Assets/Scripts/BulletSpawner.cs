@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Base;
 
-public class BulletSpawner : MonoBehaviour
+public class BulletSpawner : BasedObject
 {
     [SerializeField]
     private GameObject bullet;
@@ -10,7 +11,7 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField]
     private float spawnTime;
 
-    void Start()
+    public override void BaseObjectStart()
     {
         StartCoroutine(_Spawner(bullet));
     }

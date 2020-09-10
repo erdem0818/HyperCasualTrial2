@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
+using Base;
 
-public class TapToMove : MonoBehaviour
+public class TapToMove : BasedObject
 { 
     [SerializeField]
     private float _speed;
 
     SplineFollower _splineFollower;
-    bool Up;
+    bool Up=false;
 
-    void Start()
+    public override void BaseObjectStart()
     {
         _splineFollower = GetComponent<SplineFollower>();
 
-        _splineFollower.followSpeed =0;
+        _splineFollower.followSpeed = 0;
     }
 
-    void Update()
+    public override void BaseObjectUpdate()
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
