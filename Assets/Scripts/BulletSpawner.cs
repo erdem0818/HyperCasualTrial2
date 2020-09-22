@@ -1,31 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Base;
+using SlippyRoad;
 
-public class BulletSpawner : BasedObject
+namespace SlippyRoad
 {
-    [SerializeField]
-    private GameObject bullet;
-
-    [SerializeField]
-    private float spawnTime;
-
-    public override void BaseObjectStart()
+    public class BulletSpawner : BasedObject ,IMove
     {
-        StartCoroutine(_Spawner(bullet));
-    }
+        [SerializeField]
+        private GameObject _bullet;
 
-    private IEnumerator _Spawner(GameObject _bullet)
-    {
-        while(true)
+        [SerializeField]
+        private float spawnTime;
+
+        [SerializeField] Vector3 _bulletDirection;
+        [SerializeField] float _speed;
+
+        public override void BaseObjectStart()
+        {
+            StartCoroutine(_Spawner());
+        }
+
+        private IEnumerator _Spawner()
+        {
+            while(true)
+            {
+                Move(_speed,_bulletDirection);
+                    
+                yield return new WaitForSeconds(spawnTime);   
+            }
+
+        }
+
+        public void Move(float speed, Vector3 direction)
         {
             GameObject cloneBullet = Instantiate(_bullet, transform.position,this.transform.rotation);
-            
-            yield return new WaitForSeconds(spawnTime);
+            cloneBullet.GetComponent<Rigidbody>().velocity += direction * speed* Time.fixedDeltaTime;
 
             Destroy(cloneBullet,10f);
         }
-
     }
 }

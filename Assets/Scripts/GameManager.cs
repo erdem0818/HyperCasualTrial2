@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Base;
+using UnityEngine.SceneManagement;
+using SlippyRoad;
 
 public class GameManager : MonoBehaviour
 {   
