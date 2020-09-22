@@ -1,21 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Dreamteck.Splines;
-using SlippyRoad;
 
 namespace SlippyRoad
-{   
+{
     public class TapToMove : BasedObject
     { 
-        [SerializeField]
-        private float _speed;
+        GameManager gameManager;
+        [SerializeField] private float _speed;
 
         SplineFollower _splineFollower;
         bool Up=false;
 
         public override void BaseObjectStart()
         {
+            gameManager = FindObjectOfType<GameManager>();
             _splineFollower = GetComponent<SplineFollower>();
 
             _splineFollower.followSpeed = 0;
@@ -23,14 +21,18 @@ namespace SlippyRoad
 
         public override void BaseObjectUpdate()
         {
-            if(Input.GetKeyDown(KeyCode.A))
+            if(gameManager.states == Enums.States.Started)
             {
-                _splineFollower.followSpeed =_speed;
-                Up = false;
-            }
-            else if(Input.GetKeyUp(KeyCode.A))
-            {    
-                Up = true;
+                if(Input.GetKeyDown(KeyCode.A))
+                {
+                    _splineFollower.followSpeed =_speed;
+                    Up = false;
+                }
+                else if(Input.GetKeyUp(KeyCode.A))
+                {    
+                    Up = true;
+                }
+                
             }
             if(Up)
             {

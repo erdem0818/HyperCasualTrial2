@@ -2,34 +2,32 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SlippyRoad;
+using SlippyRoad.Enums;
 
 public class GameManager : MonoBehaviour
 {   
+    public States states;
+    [SerializeField] UIEvents uIEvents;
     private BasedObject[] BasedObjectsArray;
-    [SerializeField]
-    private List<BasedObject> _basedObjects;
+    
+    [SerializeField] private List<BasedObject> _basedObjects;
 
     public List<BasedObject> basedObjects
     {
         get => _basedObjects;
-        set 
-        {
-            if(value!=_basedObjects)
-            {
-                _basedObjects = value;
-            }
-        }
     }
 
 
     private void Awake()
     {
+        states = States.Started;
         SetUpBaseObjects();
         CallBaseObjectsAwake();
     }
     private void Start()
     {           
         CallBaseObjectsStart();
+        uIEvents.GameOver += SetGameOver;
     }
     private void Update()
     {
@@ -46,6 +44,7 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         CallBaseObjectsDestroy();
+        uIEvents.GameOver -= SetGameOver;
     }
     private void OnGameOver()
     {
@@ -110,5 +109,10 @@ public class GameManager : MonoBehaviour
         {
             e.BasedObjectGameOver();
         }
+    }
+
+    private void SetGameOver()
+    {
+        states = States.GameOver;
     }
 }

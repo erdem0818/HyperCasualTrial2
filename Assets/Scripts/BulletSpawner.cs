@@ -1,23 +1,22 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using SlippyRoad;
 
 namespace SlippyRoad
 {
     public class BulletSpawner : BasedObject ,IMove
     {
-        [SerializeField]
-        private GameObject _bullet;
-
-        [SerializeField]
-        private float spawnTime;
+        GameManager gameManager;
+        [SerializeField] private GameObject _bullet;
+    
+        [SerializeField] private float spawnTime;
+        
 
         [SerializeField] Vector3 _bulletDirection;
         [SerializeField] float _speed;
 
         public override void BaseObjectStart()
         {
+            gameManager = FindObjectOfType<GameManager>();
             StartCoroutine(_Spawner());
         }
 
@@ -25,7 +24,8 @@ namespace SlippyRoad
         {
             while(true)
             {
-                Move(_speed,_bulletDirection);
+                if(gameManager.states == Enums.States.Started)
+                    Move(_speed,_bulletDirection);
                     
                 yield return new WaitForSeconds(spawnTime);   
             }

@@ -1,24 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using SlippyRoad;
 using DG.Tweening;
 
-public class Again : BasedObject
+public class Again : BasedObject,ISlide
 {
     [SerializeField] private UIEvents uIEvents;
 
     public override void BaseObjectStart()
     {
-        uIEvents.GameOver += SlideTheButton;
+        uIEvents.GameOver += SlideTheObject;
+        uIEvents.RestartLevel += RestartCurrentLevel;
     }
 
     public override void BaseObjectDestroy()
     {
-        uIEvents.GameOver -= SlideTheButton;
+        uIEvents.GameOver -= SlideTheObject;
+        uIEvents.RestartLevel -= RestartCurrentLevel;
+    }
+    private void RestartCurrentLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private void SlideTheButton()
+    public void SlideTheObject()
     {
         var _endPos = Vector3.zero;
         transform.DOLocalMove(_endPos,0.5f);

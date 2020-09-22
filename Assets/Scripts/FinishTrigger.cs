@@ -19,5 +19,6 @@ public class FinishTrigger : BasedObject
     private void Finished()
     {
         GameObject cloneConfetti = Instantiate(_confetti,transform.position,Quaternion.identity);
+        Destroy(cloneConfetti,4f);
     }
 }
