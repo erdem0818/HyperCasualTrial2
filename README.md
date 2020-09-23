@@ -1,2 +1,2 @@
 # HyperCasualTrial2
-Basic Hyper-Casual game.
+Basic Hyper-Casual game. (Not Finished)
