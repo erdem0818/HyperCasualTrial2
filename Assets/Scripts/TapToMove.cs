@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Dreamteck.Splines;
 
 namespace SlippyRoad
@@ -10,6 +11,7 @@ namespace SlippyRoad
 
         SplineFollower _splineFollower;
         bool Up=false;
+        bool isDown=false;
 
         public override void BaseObjectStart()
         {
@@ -17,24 +19,41 @@ namespace SlippyRoad
             _splineFollower = GetComponent<SplineFollower>();
 
             _splineFollower.followSpeed = 0;
+
         }
 
         public override void BaseObjectUpdate()
         {
             if(gameManager.states == Enums.States.Started)
             {
-                if(Input.GetKeyDown(KeyCode.A))
+                if(Input.GetKeyDown(KeyCode.A)&& CheckBool(isDown))
                 {
                     _splineFollower.followSpeed =_speed;
                     Up = false;
                 }
-                else if(Input.GetKeyUp(KeyCode.A))
-                {    
-                    Up = true;
-                }
                 
             }
-            if(Up)
+            CheckUp();
+        }
+
+        
+
+        private bool CheckBool(bool Down)
+        {
+            if(gameManager.states == Enums.States.Started)
+                return Down=true;
+            else
+                return Down=false;
+        }
+
+        private void CheckUp()
+        {
+            if(Input.GetKeyUp(KeyCode.A))
+            {    
+                Up = true;
+            }
+
+            if(Up || gameManager.states == Enums.States.GameOver)
             {
                 _splineFollower.followSpeed -= Time.deltaTime *10;
             }

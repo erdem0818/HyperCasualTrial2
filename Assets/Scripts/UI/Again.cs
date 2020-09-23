@@ -25,7 +25,7 @@ public class Again : BasedObject,ISlide
 
     public void SlideTheObject()
     {
-        var _endPos = Vector3.zero;
+        var _endPos = new Vector2(0f,-16f);
         transform.DOLocalMove(_endPos,0.5f);
     }
 }

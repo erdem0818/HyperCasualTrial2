@@ -18,7 +18,7 @@ public class GameOver : BasedObject, ISlide
     }
     public void SlideTheObject()
     {
-        var _endPos = new Vector2(0f,62f);
+        var _endPos = new Vector2(0f,134f);
         transform.DOLocalMove(_endPos,0.5f);
     }
 }

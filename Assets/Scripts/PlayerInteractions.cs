@@ -27,8 +27,7 @@ public class PlayerInteractions : BasedObject
         }
         else if(other.CompareTag("Bullet"))
         {
-            uIEvents.OnGameOver();
-            
+            uIEvents.OnGameOver();          
         }
     }
 
