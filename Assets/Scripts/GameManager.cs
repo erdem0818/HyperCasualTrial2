@@ -1,24 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Base;
-using System;
+using UnityEngine.SceneManagement;
+using SlippyRoad;
+using SlippyRoad.Enums;
 
 public class GameManager : MonoBehaviour
-{
-    [SerializeField]
-    private BasedObject[] basedObjects;
-     
+{   
+    public States states;
+    [SerializeField] UIEvents uIEvents;
+    private BasedObject[] BasedObjectsArray;
+    
+    [SerializeField] private List<BasedObject> _basedObjects;
+
+    public List<BasedObject> basedObjects
+    {
+        get => _basedObjects;
+    }
+
 
     private void Awake()
     {
+        states = States.Started;
         SetUpBaseObjects();
         CallBaseObjectsAwake();
-
     }
     private void Start()
     {           
         CallBaseObjectsStart();
+        uIEvents.GameOver += SetGameOver;
     }
     private void Update()
     {
@@ -35,6 +44,7 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         CallBaseObjectsDestroy();
+        uIEvents.GameOver -= SetGameOver;
     }
     private void OnGameOver()
     {
@@ -43,55 +53,66 @@ public class GameManager : MonoBehaviour
 
     private void SetUpBaseObjects()
     {
-        basedObjects = FindObjectsOfType<BasedObject>();
+        BasedObjectsArray = FindObjectsOfType<BasedObject>();
+
+        for(int i =0; i<BasedObjectsArray.Length; i++)
+        {
+            _basedObjects.Add(BasedObjectsArray[i]);
+        }
     }
     private void CallBaseObjectsAwake()
     {
-        foreach(var e in basedObjects)
+        foreach(var e in _basedObjects)
         {
             e.BaseObjectAwake();
         }
     }
     private void CallBaseObjectsStart()
     {
-        foreach(var e in basedObjects)
+        foreach(var e in _basedObjects)
         {
             e.BaseObjectStart();
         }
     }
     private void CallBaseObjectsUpdate()
     {
-        foreach(var e in basedObjects)
+        foreach(var e in _basedObjects)
         {
             e.BaseObjectUpdate();
         }
     }
     private void CallBaseObjectsFixedUpdate()
     {
-        foreach (var e in basedObjects)
+        foreach (var e in _basedObjects)
         {
             e.BaseObjectFixedUpdate();
         }
     }
     private void CallBaseObjectsLateUpdate()
     {
-        foreach (var e in basedObjects)
+        foreach (var e in _basedObjects)
         {
             e.BaseObjectLateUpdate();
         }
     }
+    
     private void CallBaseObjectsDestroy()
     {
-        foreach (var e in basedObjects)
+        foreach (var e in _basedObjects)
         {
             e.BaseObjectDestroy();
         }
     }
     private void CallBaseObjectsGameOver()
     {
-        foreach (var e in basedObjects)
+        foreach (var e in _basedObjects)
         {
             e.BasedObjectGameOver();
         }
+    }
+
+    private void SetGameOver()
+    {
+        states = States.GameOver;
     }
 }

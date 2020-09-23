@@ -1,37 +1,62 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Dreamteck.Splines;
 
-public class TapToMove : MonoBehaviour
-{ 
-    [SerializeField]
-    private float _speed;
+namespace SlippyRoad
+{
+    public class TapToMove : BasedObject
+    { 
+        GameManager gameManager;
+        [SerializeField] private float _speed;
 
-    SplineFollower _splineFollower;
-    bool Up;
+        SplineFollower _splineFollower;
+        bool Up=false;
+        bool isDown=false;
 
-    void Start()
-    {
-        _splineFollower = GetComponent<SplineFollower>();
-
-        _splineFollower.followSpeed =0;
-    }
-
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
+        public override void BaseObjectStart()
         {
-            _splineFollower.followSpeed =_speed;
-            Up = false;
+            gameManager = FindObjectOfType<GameManager>();
+            _splineFollower = GetComponent<SplineFollower>();
+
+            _splineFollower.followSpeed = 0;
+
         }
-        else if(Input.GetKeyUp(KeyCode.A))
-        {    
-            Up = true;
-        }
-        if(Up)
+
+        public override void BaseObjectUpdate()
         {
-            _splineFollower.followSpeed -= Time.deltaTime *10;
+            if(gameManager.states == Enums.States.Started)
+            {
+                if(Input.GetKeyDown(KeyCode.A)&& CheckBool(isDown))
+                {
+                    _splineFollower.followSpeed =_speed;
+                    Up = false;
+                }
+                
+            }
+            CheckUp();
+        }
+
+        
+
+        private bool CheckBool(bool Down)
+        {
+            if(gameManager.states == Enums.States.Started)
+                return Down=true;
+            else
+                return Down=false;
+        }
+
+        private void CheckUp()
+        {
+            if(Input.GetKeyUp(KeyCode.A))
+            {    
+                Up = true;
+            }
+
+            if(Up || gameManager.states == Enums.States.GameOver)
+            {
+                _splineFollower.followSpeed -= Time.deltaTime *10;
+            }
         }
     }
 }

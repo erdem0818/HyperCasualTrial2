@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace  Base
+namespace SlippyRoad
 {
-    public class BasedObject : MonoBehaviour
+ public class BasedObject : MonoBehaviour
     {
         public virtual void BaseObjectAwake()
         {
@@ -41,4 +41,5 @@ namespace  Base
             
         }
     }
-}
+}      
+
