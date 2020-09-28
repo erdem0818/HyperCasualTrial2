@@ -12,8 +12,8 @@ public class LoadManager : BasedObject
     public override void BaseObjectStart()
     {
         fileManager = new FileManager();
-        fileManager.GetPlayer();
-        playerView = new PlayerView(new PlayerData() {level = 3 , highScore =4});
+        playerView = fileManager.GetPlayer();
+        
         uIEvents.CompleteLevel += ChangeLevelInt;     
     }
     public override void BaseObjectDestroy()
