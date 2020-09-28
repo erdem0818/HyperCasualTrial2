@@ -8,11 +8,10 @@ public class GameManager : MonoBehaviour
 {   
     public States states;
     [SerializeField] UIEvents uIEvents;
-    private BasedObject[] BasedObjectsArray;
     
-    [SerializeField] private List<BasedObject> _basedObjects;
+    [SerializeField] private BasedObject[] _basedObjects;
 
-    public List<BasedObject> basedObjects
+    public BasedObject[] basedObjects
     {
         get => _basedObjects;
     }
@@ -28,6 +27,7 @@ public class GameManager : MonoBehaviour
     {           
         CallBaseObjectsStart();
         uIEvents.GameOver += SetGameOver;
+        uIEvents.StartLevel += LoadLevel;
     }
     private void Update()
     {
@@ -45,20 +45,17 @@ public class GameManager : MonoBehaviour
     {
         CallBaseObjectsDestroy();
         uIEvents.GameOver -= SetGameOver;
+        uIEvents.StartLevel-= LoadLevel;
     }
     private void OnGameOver()
     {
         CallBaseObjectsGameOver();
     }
-
+    #region 
     private void SetUpBaseObjects()
     {
-        BasedObjectsArray = FindObjectsOfType<BasedObject>();
 
-        for(int i =0; i<BasedObjectsArray.Length; i++)
-        {
-            _basedObjects.Add(BasedObjectsArray[i]);
-        }
+        _basedObjects = FindObjectsOfType<BasedObject>();
     }
     private void CallBaseObjectsAwake()
     {
@@ -110,9 +107,16 @@ public class GameManager : MonoBehaviour
             e.BasedObjectGameOver();
         }
     }
+    #endregion 
 
     private void SetGameOver()
     {
         states = States.GameOver;
+    }
+
+    private void LoadLevel()
+    {
+        FileManager fileManager = new FileManager();
+        fileManager.GetPlayer();
     }
 }
