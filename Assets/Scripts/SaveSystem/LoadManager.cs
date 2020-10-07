@@ -1,31 +1,28 @@
 ﻿using UnityEngine;
 using SlippyRoad;
+using UnityEngine.SceneManagement;
 
 public class LoadManager : BasedObject
 {
-    [SerializeField] UIEvents uIEvents;
-
     private FileManager fileManager;
     public PlayerView playerView {get; private set;}
 
+    [SerializeField] Scene scenes;
 
     public override void BaseObjectStart()
     {
         fileManager = new FileManager();
         playerView = fileManager.GetPlayer();
         
-        uIEvents.CompleteLevel += ChangeLevelInt;     
+        GameEvents.instance.StartLevel += LoadScene;  
     }
     public override void BaseObjectDestroy()
     {
-        uIEvents.CompleteLevel -= ChangeLevelInt;
+        GameEvents.instance.StartLevel -= LoadScene;
     }
    
-    void ChangeLevelInt()
+    void LoadScene()
     {
-        playerView.Level +=1;
-        playerView.HighScore +=100;
+        SceneManager.LoadScene(playerView.Level);
     }
-
-
 }

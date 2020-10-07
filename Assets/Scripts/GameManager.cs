@@ -7,8 +7,7 @@ using SlippyRoad.Enums;
 public class GameManager : MonoBehaviour
 {   
     public States states;
-    [SerializeField] UIEvents uIEvents;
-    
+
     [SerializeField] private BasedObject[] _basedObjects;
 
     public BasedObject[] basedObjects
@@ -26,8 +25,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {           
         CallBaseObjectsStart();
-        uIEvents.GameOver += SetGameOver;
-        uIEvents.StartLevel += LoadLevel;
+        GameEvents.instance.GameOver += SetGameOver;
+        GameEvents.instance.StartLevel += LoadLevel;
     }
     private void Update()
     {
@@ -44,8 +43,8 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         CallBaseObjectsDestroy();
-        uIEvents.GameOver -= SetGameOver;
-        uIEvents.StartLevel-= LoadLevel;
+        GameEvents.instance.GameOver -= SetGameOver;
+        GameEvents.instance.StartLevel-= LoadLevel;
     }
     private void OnGameOver()
     {

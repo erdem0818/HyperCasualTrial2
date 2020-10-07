@@ -2,21 +2,20 @@
 using UnityEngine.SceneManagement;
 using SlippyRoad;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
-public class Again : BasedObject,ISlide
+public class Again : BasedObject,ISlide , IPointerDownHandler
 {
-    [SerializeField] private UIEvents uIEvents;
-
     public override void BaseObjectStart()
     {
-        uIEvents.GameOver += SlideTheObject;
-        uIEvents.RestartLevel += RestartCurrentLevel;
+        GameEvents.instance.GameOver += SlideTheObject;
+        GameEvents.instance.RestartLevel += RestartCurrentLevel;
     }
 
     public override void BaseObjectDestroy()
     {
-        uIEvents.GameOver -= SlideTheObject;
-        uIEvents.RestartLevel -= RestartCurrentLevel;
+        GameEvents.instance.GameOver -= SlideTheObject;
+        GameEvents.instance.RestartLevel -= RestartCurrentLevel;
     }
     private void RestartCurrentLevel()
     {
@@ -26,6 +25,11 @@ public class Again : BasedObject,ISlide
     public void SlideTheObject()
     {
         var _endPos = new Vector2(0f,-16f);
-        transform.DOLocalMove(_endPos,0.5f);
+        transform.DOLocalMove(_endPos,0.5f).SetEase(Ease.OutCubic);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        GameEvents.instance.OnRestartLevel();
     }
 }

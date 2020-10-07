@@ -38,7 +38,7 @@ public class FileManager
             return playerView;
         }
         
-        playerView = new PlayerView(new PlayerData() {highScore =0, level =1});
+        playerView = new PlayerView(new PlayerData() {highScore =0, level =0});
         SetHandle(playerView);
         Debug.Log(playerView.HighScore);
         Debug.Log(playerView.Level);

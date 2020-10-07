@@ -1,23 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using SlippyRoad;
 
-public class TapToStart : BasedObject
+public class TapToStart : BasedObject , IPointerDownHandler
 {
-    [SerializeField] UIEvents uIEvents;
-
-    public override void BaseObjectStart()
-    {
-        uIEvents.StartLevel += TapToStartButton;
-    }
-    public override void BaseObjectDestroy()
-    {
-        uIEvents.StartLevel -= TapToStartButton;
-    }
-
-    private void TapToStartButton()
-    {
-        this.gameObject.SetActive(false);
+    public void OnPointerDown(PointerEventData eventData)
+    { 
+        GameEvents.instance.OnStartLevel();
     }
 }
