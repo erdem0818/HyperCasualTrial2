@@ -9,8 +9,8 @@ public class PlayerController : BasedObject
    [SerializeField] private SplineComputer[] splines;
 
     
-   private void OnEnable() => GameEvents.instance.CompleteLevel += LoadNext;
-   private void OnDisable() => GameEvents.instance.CompleteLevel -= LoadNext;
+   private void OnEnable() => GameEvents.instance.NextLevel += LoadNext;
+   private void OnDisable() => GameEvents.instance.NextLevel -= LoadNext;
 
    public override void BaseObjectStart()
    {
@@ -30,5 +30,4 @@ public class PlayerController : BasedObject
       Levels[change.playerView.Level + 1].SetActive(true);
       transform.position = splines[1].GetPointPosition(0);
    }
-
 }

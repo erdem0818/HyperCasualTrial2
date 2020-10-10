@@ -119,7 +119,6 @@ public class GameManager : MonoBehaviour
     {
         states = States.GameOver;
     }
-
     private void SetFinish()
     {
         states = States.Finished;

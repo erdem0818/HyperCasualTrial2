@@ -28,9 +28,7 @@ namespace SlippyRoad
                 if(gameManager.states == States.Started)
                 {
                     GameObject cloneBullet = Instantiate(_bullet, transform.position,this.transform.rotation);
-                    Debug.Log("mermi");
                 }          
-                             
                 yield return new WaitForSeconds(spawnTime);   
             }
 
