@@ -4,7 +4,8 @@ using SlippyRoad.Enums;
 
 namespace SlippyRoad
 {
-    public class BulletSpawner : BasedObject
+    //BasedObject olunca bulmadı.
+    public class BulletSpawner : MonoBehaviour
     {
         GameManager gameManager;
         private GameObject _bullet;
@@ -12,7 +13,7 @@ namespace SlippyRoad
         [SerializeField] private float spawnTime;
         
 
-        public override void BaseObjectStart()
+        private void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
             _bullet = GetComponentInChildren<BulletInteractions>().gameObject;
@@ -27,6 +28,7 @@ namespace SlippyRoad
                 if(gameManager.states == States.Started)
                 {
                     GameObject cloneBullet = Instantiate(_bullet, transform.position,this.transform.rotation);
+                    Debug.Log("mermi");
                 }          
                              
                 yield return new WaitForSeconds(spawnTime);   

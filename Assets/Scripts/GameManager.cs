@@ -15,7 +15,18 @@ public class GameManager : MonoBehaviour
         get => _basedObjects;
     }
 
-
+    private void OnEnable()
+    {
+        GameEvents.instance.GameOver += SetGameOver;
+        GameEvents.instance.StartLevel += LoadLevel;
+        GameEvents.instance.CompleteLevel += SetFinish;
+    }
+    private void OnDisable()
+    {
+        GameEvents.instance.GameOver -= SetGameOver;
+        GameEvents.instance.StartLevel-= LoadLevel;
+        GameEvents.instance.CompleteLevel -= SetFinish;
+    }
     private void Awake()
     {
         states = States.Started;
@@ -25,9 +36,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {           
         CallBaseObjectsStart();
-        GameEvents.instance.GameOver += SetGameOver;
-        GameEvents.instance.StartLevel += LoadLevel;
-        GameEvents.instance.CompleteLevel += SetFinish;
     }
     private void Update()
     {
@@ -44,9 +52,6 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         CallBaseObjectsDestroy();
-        GameEvents.instance.GameOver -= SetGameOver;
-        GameEvents.instance.StartLevel-= LoadLevel;
-        GameEvents.instance.CompleteLevel -= SetFinish;
     }
     private void OnGameOver()
     {

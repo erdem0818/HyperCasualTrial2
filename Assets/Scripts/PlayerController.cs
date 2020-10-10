@@ -21,7 +21,7 @@ public class PlayerController : BasedObject
    private void SetPlayerPosition()
    {
       SplinePoint[] splinePoints = splines[change.playerView.Level].GetPoints();
-      transform.position = splinePoints[splinePoints.Length].position; 
+      transform.position = splinePoints[splinePoints.Length-1].position; 
    }
 
    private void LoadNext()
