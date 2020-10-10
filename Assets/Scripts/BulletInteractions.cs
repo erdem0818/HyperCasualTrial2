@@ -5,6 +5,8 @@ namespace SlippyRoad
 
     public class BulletInteractions : BasedObject , IMove
     {
+        //OYUN BİTİNCE VEYA YANINCA SÜREKLİ CAM SHAKE YAPMASIN
+
         [SerializeField] private float _speed;
         [SerializeField] private Vector3 _direction;
         private void OnEnable()

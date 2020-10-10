@@ -2,6 +2,6 @@
 {
     public enum States
     {
-        Started,Waiting,GameOver
+        Started,Waiting,GameOver,Finished
     }
 }

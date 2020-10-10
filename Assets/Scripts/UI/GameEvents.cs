@@ -44,5 +44,14 @@ public class GameEvents
         }
     }
 
+    public event Action NextLevel;
+    public void OnNextLevel()
+    {
+        if(NextLevel!=null)
+        {
+            NextLevel();
+        }
+    }
+
 
 }

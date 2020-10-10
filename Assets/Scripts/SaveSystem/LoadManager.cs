@@ -7,8 +7,6 @@ public class LoadManager : BasedObject
     private FileManager fileManager;
     public PlayerView playerView {get; private set;}
 
-    [SerializeField] Scene scenes;
-
     public override void BaseObjectStart()
     {
         fileManager = new FileManager();
@@ -19,10 +17,12 @@ public class LoadManager : BasedObject
     public override void BaseObjectDestroy()
     {
         GameEvents.instance.StartLevel -= LoadScene;
+
     }
    
     void LoadScene()
     {
         SceneManager.LoadScene(playerView.Level);
     }
+
 }

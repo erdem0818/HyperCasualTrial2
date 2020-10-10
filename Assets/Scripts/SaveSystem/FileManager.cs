@@ -7,7 +7,6 @@ public class FileManager
     private void SetHandle(PlayerView playerView)
     {
         playerView.ValueChanged += OnValueChanged;
-        Debug.Log("setHandle");
     }
 
     private void OnValueChanged(PlayerView p)
@@ -32,7 +31,6 @@ public class FileManager
         {
             playerView = new PlayerView(JsonUtility.FromJson<PlayerData>(PlayerPrefs.GetString("PlayerData")));
             SetHandle(playerView);
-            Debug.Log(playerView.HighScore);
             Debug.Log(playerView.Level);
             Debug.Log("eski kayıt");
             return playerView;
@@ -40,7 +38,6 @@ public class FileManager
         
         playerView = new PlayerView(new PlayerData() {highScore =0, level =0});
         SetHandle(playerView);
-        Debug.Log(playerView.HighScore);
         Debug.Log(playerView.Level);
         Debug.Log("yeni kayıt");
         return playerView;

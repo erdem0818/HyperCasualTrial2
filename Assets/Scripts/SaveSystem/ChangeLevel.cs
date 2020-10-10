@@ -6,7 +6,7 @@ public class ChangeLevel : BasedObject
     private FileManager fileManager;
     public PlayerView playerView {get; private set;}
 
-    public override void BaseObjectStart()
+    public override void BaseObjectAwake()
     {
         fileManager= new FileManager();
         playerView = fileManager.GetPlayer();

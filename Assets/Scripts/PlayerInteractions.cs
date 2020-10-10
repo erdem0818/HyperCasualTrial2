@@ -15,6 +15,7 @@ public class PlayerInteractions : BasedObject
         if(other.CompareTag("Finish"))
         {
             GameEvents.instance.OnCompleteLevel();
+            Debug.Log("finish");
         }
         else if(other.CompareTag("Bullet"))
         {

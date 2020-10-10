@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         CallBaseObjectsStart();
         GameEvents.instance.GameOver += SetGameOver;
         GameEvents.instance.StartLevel += LoadLevel;
+        GameEvents.instance.CompleteLevel += SetFinish;
     }
     private void Update()
     {
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
         CallBaseObjectsDestroy();
         GameEvents.instance.GameOver -= SetGameOver;
         GameEvents.instance.StartLevel-= LoadLevel;
+        GameEvents.instance.CompleteLevel -= SetFinish;
     }
     private void OnGameOver()
     {
@@ -113,6 +115,10 @@ public class GameManager : MonoBehaviour
         states = States.GameOver;
     }
 
+    private void SetFinish()
+    {
+        states = States.Finished;
+    }
     private void LoadLevel()
     {
         FileManager fileManager = new FileManager();

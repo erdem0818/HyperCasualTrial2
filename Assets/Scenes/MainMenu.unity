@@ -1686,7 +1686,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenes:
-    m_Handle: 2
+  - m_Handle: 0
+  - m_Handle: 0
+  - m_Handle: 0
+  - m_Handle: 0
+  - m_Handle: 0
 --- !u!4 &1846069841
 Transform:
   m_ObjectHideFlags: 0

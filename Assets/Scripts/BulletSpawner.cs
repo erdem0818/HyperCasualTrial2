@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using SlippyRoad.Enums;
 
 namespace SlippyRoad
 {
@@ -23,7 +24,7 @@ namespace SlippyRoad
         {
             while(true)
             {
-                if(gameManager.states == Enums.States.Started)
+                if(gameManager.states == States.Started)
                 {
                     GameObject cloneBullet = Instantiate(_bullet, transform.position,this.transform.rotation);
                 }          
