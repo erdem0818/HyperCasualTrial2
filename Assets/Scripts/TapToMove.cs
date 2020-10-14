@@ -21,7 +21,6 @@ namespace SlippyRoad
             _splineFollower.followSpeed = 0;
 
         }
-
         public override void BaseObjectUpdate()
         {
             if(gameManager.states == Enums.States.Started)
@@ -31,21 +30,35 @@ namespace SlippyRoad
                     _splineFollower.followSpeed =_speed;
                     Up = false;
                 }
+
+                if(Input.touchCount>0)
+                {
+                    Touch touch = Input.GetTouch(0);
+
+                    switch (touch.phase)
+                    {
+                        case TouchPhase.Began:
+                             _splineFollower.followSpeed =_speed;
+                            Up = false;
+                            break;
+
+               
+                        case TouchPhase.Stationary:
+                           
+                            break;
+
+                        case TouchPhase.Ended:
+                            Up = true;
+                            break;
+                    }
+                }
                 
             }
+
             CheckUp();
         }
 
         
-
-        private bool CheckBool(bool Down)
-        {
-            if(gameManager.states == Enums.States.Started)
-                return Down=true;
-            else
-                return Down=false;
-        }
-
         private void CheckUp()
         {
             if(Input.GetKeyUp(KeyCode.A))
@@ -57,6 +70,15 @@ namespace SlippyRoad
             {
                 _splineFollower.followSpeed -= Time.deltaTime *10;
             }
+        }
+
+
+        private bool CheckBool(bool Down)
+        {
+            if(gameManager.states == Enums.States.Started)
+                return Down=true;
+            else
+                return Down=false;
         }
     }
 }

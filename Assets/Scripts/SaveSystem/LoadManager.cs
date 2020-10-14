@@ -22,7 +22,7 @@ public class LoadManager : BasedObject
    
     void LoadScene()
     {
-        SceneManager.LoadScene(playerView.Level);
+        SceneManager.LoadScene(playerView.Level+1);
     }
 
 }

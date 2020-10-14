@@ -4905,14 +4905,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 215031059}
   smoothing: 0.125
-  maxPosition:
-  - {x: 6, y: 9}
-  - {x: 10, y: 9}
-  - {x: 19, y: 9}
-  minPosition:
-  - {x: 6, y: 9}
-  - {x: 6, y: 9}
-  - {x: 6, y: 9}
+  maxPosition: {x: 0, y: 0}
+  minPosition: {x: 0, y: 0}
 --- !u!4 &980815316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2918214021731269773, guid: 3a934f130bc09b843be1c3736f72671a,
