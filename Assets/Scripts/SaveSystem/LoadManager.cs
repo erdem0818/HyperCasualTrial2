@@ -4,13 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class LoadManager : BasedObject
 {
-    private FileManager fileManager;
     public PlayerView playerView {get; private set;}
 
     public override void BaseObjectStart()
     {
-        fileManager = new FileManager();
-        playerView = fileManager.GetPlayer();
+        playerView = FileManager.instance.GetPlayer();
         
         GameEvents.instance.StartLevel += LoadScene;  
     }
@@ -19,7 +17,6 @@ public class LoadManager : BasedObject
         GameEvents.instance.StartLevel -= LoadScene;
 
     }
-   
     void LoadScene()
     {
         SceneManager.LoadScene(playerView.Level+1);

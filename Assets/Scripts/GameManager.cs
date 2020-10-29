@@ -18,13 +18,11 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.instance.GameOver += SetGameOver;
-        GameEvents.instance.StartLevel += LoadLevel;
         GameEvents.instance.CompleteLevel += SetFinish;
     }
     private void OnDisable()
     {
         GameEvents.instance.GameOver -= SetGameOver;
-        GameEvents.instance.StartLevel-= LoadLevel;
         GameEvents.instance.CompleteLevel -= SetFinish;
     }
     private void Awake()
@@ -122,12 +120,5 @@ public class GameManager : MonoBehaviour
     private void SetFinish()
     {
         states = States.Finished;
-    }
-    private void LoadLevel()
-    {
-        FileManager fileManager = new FileManager();
-        fileManager.GetPlayer();
-    }
-
-    
+    } 
 }

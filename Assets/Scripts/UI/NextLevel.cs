@@ -21,7 +21,8 @@ public class NextLevel : BasedObject, ISlide, IPointerDownHandler
     
     public void OnPointerDown(PointerEventData eventData)
     {
-       SceneManager.LoadScene(changeLevel.playerView.Level+1);
+        if(changeLevel.playerView.Level != 15) SceneManager.LoadScene(changeLevel.playerView.Level+1);
+        else Debug.Log ("son seviye");
     }
 
     public void SlideTheObject()

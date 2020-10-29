@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class ChangeLevel : BasedObject
 {
-    private FileManager fileManager;
     public PlayerView playerView {get; private set;}
 
     public override void BaseObjectAwake()
     {
-        fileManager= new FileManager();
-        playerView = fileManager.GetPlayer();
+        playerView = FileManager.instance.GetPlayer();
 
         GameEvents.instance.CompleteLevel += IncreaseLevel;
     }

@@ -3,7 +3,11 @@ using SlippyRoad;
 
 public class FileManager
 {
-    public FileManager() {}
+    #region singleton
+    public static FileManager instance {get; set;} = new FileManager();
+    private FileManager() {}
+    #endregion
+
     private void SetHandle(PlayerView playerView)
     {
         playerView.ValueChanged += OnValueChanged;
@@ -21,6 +25,7 @@ public class FileManager
         playerData.level = playerView.Level;
 
         PlayerPrefs.SetString("PlayerData",JsonUtility.ToJson(playerData));
+        PlayerPrefs.Save();
     }
 
     public PlayerView GetPlayer()
