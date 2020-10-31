@@ -1,24 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using SlippyRoad;
 
 public class FinishTrigger : BasedObject
 {   
-    [SerializeField] UIEvents uIEvents;
-    [SerializeField] GameObject _confetti;
     
-    public override void BaseObjectStart()
-    {
-        uIEvents.CompleteLevel += Finished;
-    }
-    public override void BaseObjectDestroy()
-    {
-        uIEvents.CompleteLevel -= Finished;
-    }
+    [SerializeField] GameObject[] _confetti;
+
+    public override void BaseObjectStart() => GameEvents.instance.CompleteLevel += Finished;
+    public override void BaseObjectDestroy() => GameEvents.instance.CompleteLevel -= Finished;
+    
     private void Finished()
     {
-        GameObject cloneConfetti = Instantiate(_confetti,transform.position,Quaternion.identity);
-        Destroy(cloneConfetti,4f);
+        foreach(GameObject e in _confetti)
+        {
+           e.SetActive(true);
+        }
+        
     }
 }

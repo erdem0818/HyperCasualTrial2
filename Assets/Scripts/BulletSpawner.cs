@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using UnityEngine;
+using SlippyRoad.Enums;
 
 namespace SlippyRoad
 {
-    public class BulletSpawner : BasedObject ,IMove
+    //BasedObject olunca bulmadı.
+    public class BulletSpawner : MonoBehaviour
     {
         GameManager gameManager;
-        [SerializeField] private GameObject _bullet;
+        private GameObject _bullet;
     
         [SerializeField] private float spawnTime;
         
 
-        [SerializeField] Vector3 _bulletDirection;
-        [SerializeField] float _speed;
-
-        public override void BaseObjectStart()
+        private void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
+            _bullet = GetComponentInChildren<BulletInteractions>().gameObject;
+
             StartCoroutine(_Spawner());
         }
 
@@ -24,20 +25,14 @@ namespace SlippyRoad
         {
             while(true)
             {
-                if(gameManager.states == Enums.States.Started)
-                    Move(_speed,_bulletDirection);
-                    
+                if(gameManager.states == States.Started)
+                {
+                    GameObject cloneBullet = Instantiate(_bullet, transform.position,this.transform.rotation);
+                    Destroy(cloneBullet,20f);
+                }          
                 yield return new WaitForSeconds(spawnTime);   
             }
 
-        }
-
-        public void Move(float speed, Vector3 direction)
-        {
-            GameObject cloneBullet = Instantiate(_bullet, transform.position,this.transform.rotation);
-            cloneBullet.GetComponent<Rigidbody>().velocity += direction * speed* Time.fixedDeltaTime;
-
-            Destroy(cloneBullet,10f);
         }
     }
 }

@@ -6,15 +6,13 @@ using DG.Tweening;
 
 public class CameraShake : BasedObject
 {
-    [SerializeField] UIEvents uIEvents;
-
     public override void BaseObjectStart()
     {
-        uIEvents.GameOver += ShakeTheCam;
+        GameEvents.instance.GameOver += ShakeTheCam;
     }
     public override void BaseObjectDestroy()
     {
-        uIEvents.GameOver -= ShakeTheCam;
+        GameEvents.instance.GameOver -= ShakeTheCam;
     }
 
     private void ShakeTheCam()

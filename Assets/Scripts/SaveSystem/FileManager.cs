@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using SlippyRoad;
-using System;
 
 public class FileManager
 {
+    #region singleton
+    public static FileManager instance {get; set;} = new FileManager();
+    private FileManager() {}
+    #endregion
+
     private void SetHandle(PlayerView playerView)
     {
         playerView.ValueChanged += OnValueChanged;
@@ -21,6 +25,7 @@ public class FileManager
         playerData.level = playerView.Level;
 
         PlayerPrefs.SetString("PlayerData",JsonUtility.ToJson(playerData));
+        PlayerPrefs.Save();
     }
 
     public PlayerView GetPlayer()
@@ -31,11 +36,15 @@ public class FileManager
         {
             playerView = new PlayerView(JsonUtility.FromJson<PlayerData>(PlayerPrefs.GetString("PlayerData")));
             SetHandle(playerView);
+            Debug.Log(playerView.Level);
+            Debug.Log("eski kayıt");
             return playerView;
         }
         
-        playerView = new PlayerView(new PlayerData() {highScore =0, level =1});
+        playerView = new PlayerView(new PlayerData() {highScore =0, level =0});
         SetHandle(playerView);
+        Debug.Log(playerView.Level);
+        Debug.Log("yeni kayıt");
         return playerView;
     }
 }

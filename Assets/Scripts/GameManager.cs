@@ -1,23 +1,30 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using SlippyRoad;
 using SlippyRoad.Enums;
+using Dreamteck.Splines;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {   
     public States states;
-    [SerializeField] UIEvents uIEvents;
-    private BasedObject[] BasedObjectsArray;
-    
-    [SerializeField] private List<BasedObject> _basedObjects;
 
-    public List<BasedObject> basedObjects
+    [SerializeField] private BasedObject[] _basedObjects;
+
+    public BasedObject[] basedObjects
     {
         get => _basedObjects;
     }
 
-
+    private void OnEnable()
+    {
+        GameEvents.instance.GameOver += SetGameOver;
+        GameEvents.instance.CompleteLevel += SetFinish;
+    }
+    private void OnDisable()
+    {
+        GameEvents.instance.GameOver -= SetGameOver;
+        GameEvents.instance.CompleteLevel -= SetFinish;
+    }
     private void Awake()
     {
         states = States.Started;
@@ -27,7 +34,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {           
         CallBaseObjectsStart();
-        uIEvents.GameOver += SetGameOver;
     }
     private void Update()
     {
@@ -44,21 +50,16 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         CallBaseObjectsDestroy();
-        uIEvents.GameOver -= SetGameOver;
     }
     private void OnGameOver()
     {
         CallBaseObjectsGameOver();
     }
-
+    #region 
     private void SetUpBaseObjects()
     {
-        BasedObjectsArray = FindObjectsOfType<BasedObject>();
 
-        for(int i =0; i<BasedObjectsArray.Length; i++)
-        {
-            _basedObjects.Add(BasedObjectsArray[i]);
-        }
+        _basedObjects = FindObjectsOfType<BasedObject>();
     }
     private void CallBaseObjectsAwake()
     {
@@ -110,9 +111,14 @@ public class GameManager : MonoBehaviour
             e.BasedObjectGameOver();
         }
     }
+    #endregion 
 
     private void SetGameOver()
     {
         states = States.GameOver;
     }
+    private void SetFinish()
+    {
+        states = States.Finished;
+    } 
 }

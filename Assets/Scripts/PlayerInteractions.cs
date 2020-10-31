@@ -5,29 +5,21 @@ using SlippyRoad;
 
 public class PlayerInteractions : BasedObject
 {
-    [SerializeField] UIEvents uIEvents;
+    public override void BaseObjectStart() => GameEvents.instance.GameOver += gameOver;
+    public override void BaseObjectDestroy() => GameEvents.instance.GameOver -= gameOver;
+
+    private void gameOver() => Debug.Log("yandın");
     
-    public override void BaseObjectStart()
-    {   
-        uIEvents.GameOver += gameOver;
-    }
-    public override void BaseObjectDestroy()
-    {
-        uIEvents.GameOver -= gameOver;
-    }
-    private void gameOver()
-    {
-        Debug.Log("yandın");
-    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Finish"))
         {
-            uIEvents.OnCompleteLevel();
+            GameEvents.instance.OnCompleteLevel();
+            Debug.Log("finish");
         }
         else if(other.CompareTag("Bullet"))
         {
-            uIEvents.OnGameOver();          
+            GameEvents.instance.OnGameOver();          
         }
     }
 
